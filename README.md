@@ -12,6 +12,17 @@ The report is a stand-alone application and uses as few dependencies as possible
 free to use! CopyPaste and enjoy!\
 😉
 
+## How to use
+
+### Download/export Transport request as Zip File
+<img src="images/howto_download.png" alt="HowToDownload" width="400"/>
+
+### Upload/export Transport request as Zip File
+<img src="images/howto_upload.png" alt="HowToUpload" width="400"/>
+
+### ZipFile content
+<img src="images/howto_zip_content.png" alt="HowToZipContent" width="400"/>
+
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
