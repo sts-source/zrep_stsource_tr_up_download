@@ -23,6 +23,8 @@ REPORT zrep_stsource_tr_up_download.
 "  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 "  SOFTWARE.
 
+" Source: https://github.com/sts-source/zrep_stsource_tr_up_download
+
 CLASS lcx_exception DEFINITION INHERITING FROM cx_dynamic_check.
 
   PUBLIC SECTION.
