@@ -25,7 +25,7 @@ REPORT zrep_stsource_tr_up_download.
 
 " Source: https://github.com/sts-source/zrep_stsource_tr_up_download
 
-CLASS lcx_exception DEFINITION INHERITING FROM cx_dynamic_check.
+CLASS lcx_exception DEFINITION INHERITING FROM cx_no_check.
 
   PUBLIC SECTION.
     METHODS constructor IMPORTING !message  TYPE string         OPTIONAL
