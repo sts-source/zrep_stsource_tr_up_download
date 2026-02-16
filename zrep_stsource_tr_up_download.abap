@@ -71,25 +71,21 @@ CLASS lcl_file_system DEFINITION ABSTRACT.
   PUBLIC SECTION.
     METHODS path_combine
       IMPORTING parts         TYPE string_table
-      RETURNING VALUE(result) TYPE string
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE string.
 
     METHODS file_read ABSTRACT
       IMPORTING filepath      TYPE string
-      RETURNING VALUE(result) TYPE xstring
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE xstring.
 
     METHODS file_write ABSTRACT
       IMPORTING filepath TYPE string
-                content  TYPE xstring
-      RAISING   lcx_exception.
+                content  TYPE xstring.
 
     METHODS replace_invalide_chars
       IMPORTING path_or_filename TYPE string
                 replace_with     TYPE char1     DEFAULT '_'
                 is_filename      TYPE abap_bool DEFAULT abap_false
-      RETURNING VALUE(result)    TYPE string
-      RAISING   lcx_exception.
+      RETURNING VALUE(result)    TYPE string.
 
     CLASS-METHODS class_constructor.
 
@@ -171,9 +167,9 @@ CLASS lcl_file_system_client IMPLEMENTATION.
     DATA(bin_tab) = VALUE solix_tab( ).
     DATA(length) = 0.
 
-    cl_gui_frontend_services=>gui_upload( EXPORTING  filename   = filepath            " Name der Datei
-                                                     filetype   = 'BIN'            " Dateityp (Ascii, Binär)
-                                          IMPORTING  filelength = length                 " Dateilänge
+    cl_gui_frontend_services=>gui_upload( EXPORTING  filename   = filepath
+                                                     filetype   = 'BIN'
+                                          IMPORTING  filelength = length
                                           CHANGING   data_tab   = bin_tab
                                           EXCEPTIONS OTHERS     = 99 ).
     IF sy-subrc <> 0.
@@ -199,10 +195,10 @@ CLASS lcl_file_system_client IMPLEMENTATION.
       EXPORTING buffer     = content
       TABLES    binary_tab = bin_tab.
 
-    cl_gui_frontend_services=>gui_download( EXPORTING  bin_filesize = xstrlen( content )                      " Dateilänge bei Binärdateien
-                                                       filename     = filepath                     " Name der Datei
-                                                       filetype     = 'BIN'                " Dateityp (Ascii, Binär, ...)
-                                            CHANGING   data_tab     = bin_tab                     " Übergabetabelle
+    cl_gui_frontend_services=>gui_download( EXPORTING  bin_filesize = xstrlen( content )
+                                                       filename     = filepath
+                                                       filetype     = 'BIN'
+                                            CHANGING   data_tab     = bin_tab
                                             EXCEPTIONS OTHERS       = 99 ).
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE lcx_exception
@@ -214,7 +210,7 @@ CLASS lcl_file_system_client IMPLEMENTATION.
   METHOD get_path_kind.
     IF my_path_kind IS INITIAL.
       "  Client OS ******************************************
-      cl_gui_frontend_services=>get_platform( RECEIVING  platform             = DATA(client_platform)    " Gibt die Plattform zurück
+      cl_gui_frontend_services=>get_platform( RECEIVING  platform             = DATA(client_platform)
                                               EXCEPTIONS error_no_gui         = 1
                                                          cntl_error           = 2
                                                          not_supported_by_gui = 3
@@ -322,64 +318,51 @@ CLASS lcl_dev_tr DEFINITION.
 
     CLASS-METHODS s_tr_append_to_queue
       IMPORTING trkorr           TYPE trkorr
-                popup_to_confirm TYPE abap_bool DEFAULT abap_true
-      RAISING   lcx_exception.
+                popup_to_confirm TYPE abap_bool DEFAULT abap_true.
 
     CLASS-METHODS s_tr_as_zip_export
       IMPORTING trkorr        TYPE trkorr
-      RETURNING VALUE(result) TYPE xstring
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE xstring.
 
     CLASS-METHODS s_tr_as_zip_import
       IMPORTING zip_content             TYPE xstring
-                popup_to_confirm_append TYPE abap_bool DEFAULT abap_true
-      RAISING   lcx_exception.
+                popup_to_confirm_append TYPE abap_bool DEFAULT abap_true.
 
     CLASS-METHODS s_tr_as_zip_popup_download
-      IMPORTING VALUE(trkorr) TYPE trkorr OPTIONAL
-      RAISING   lcx_exception.
+      IMPORTING VALUE(trkorr) TYPE trkorr OPTIONAL.
 
     CLASS-METHODS s_tr_as_zip_popup_upload
       RAISING lcx_exception.
 
     CLASS-METHODS s_tr_choice_dialog
-      RETURNING VALUE(result) TYPE trkorr
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE trkorr.
 
     CLASS-METHODS s_tr_download
       IMPORTING trkorr   TYPE trkorr
-                dir_path TYPE csequence
-      RAISING   lcx_exception.
+                dir_path TYPE csequence.
 
     CLASS-METHODS s_tr_get_description
       IMPORTING trkorr        TYPE trkorr
-      RETURNING VALUE(result) TYPE string
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE string.
 
     CLASS-METHODS s_tr_path
-      RETURNING VALUE(result) TYPE string
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE string.
 
     CLASS-METHODS s_tr_path_cofiles
-      RETURNING VALUE(result) TYPE string
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE string.
 
     CLASS-METHODS s_tr_path_data
-      RETURNING VALUE(result) TYPE string
-      RAISING   lcx_exception.
+      RETURNING VALUE(result) TYPE string.
 
     CLASS-METHODS s_tr_upload
       IMPORTING trkorr   TYPE trkorr
-                dir_path TYPE csequence
-      RAISING   lcx_exception.
+                dir_path TYPE csequence.
 ENDCLASS.
 
 
 CLASS lcl_dev_tr IMPLEMENTATION.
 
   METHOD s_tr_append_to_queue.
-
-    " Created: ©2019 - Stefan Schwab
 
     IF popup_to_confirm = abap_true.
       DATA(answer) = VALUE char1( ).
@@ -408,12 +391,8 @@ CLASS lcl_dev_tr IMPLEMENTATION.
 
   METHOD s_tr_as_zip_export.
 
-    " Created: ©2019 - Stefan Schwab
-
     DATA rfile TYPE string.
     DATA kfile TYPE string.
-
-    " --------------------------------[ B O D Y ]---------------------------------------
 
     IF trkorr+3(1) = 'K'.
       DATA sid  TYPE char3.
@@ -463,8 +442,6 @@ CLASS lcl_dev_tr IMPLEMENTATION.
 
   METHOD s_tr_as_zip_import.
 
-    " Created: ©2019 - Stefan Schwab
-
     TYPES: BEGIN OF lty_s_trkorr_file,
              trkorr      TYPE trkorr,
              r_file      TYPE xstring,
@@ -472,8 +449,6 @@ CLASS lcl_dev_tr IMPLEMENTATION.
              k_file      TYPE xstring,
              k_file_name TYPE string,
            END OF lty_s_trkorr_file.
-
-    " --------------------------------[ B O D Y ]---------------------------------------
 
     TRY.
 
@@ -598,8 +573,6 @@ CLASS lcl_dev_tr IMPLEMENTATION.
 
   METHOD s_tr_as_zip_popup_download.
 
-    " Created: ©2019 - Stefan Schwab
-
     DATA path        TYPE string.
     DATA filename    TYPE string.
     DATA fullpath    TYPE string.
@@ -643,11 +616,6 @@ CLASS lcl_dev_tr IMPLEMENTATION.
 
   ENDMETHOD.
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Static Public Method lcl_DEV_TR=>S_TR_AS_ZIP_POPUP_UPLOAD
-* +-------------------------------------------------------------------------------------------------+
-* | [!CX!] lcx_exception
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD s_tr_as_zip_popup_upload.
 
     " Created: ©2019 - Stefan Schwab
@@ -658,11 +626,11 @@ CLASS lcl_dev_tr IMPLEMENTATION.
 
     " --------------------------------[ B O D Y ]---------------------------------------
 
-    cl_gui_frontend_services=>file_open_dialog( EXPORTING  file_filter    = `Zip Files (*.zip)|*.zip|`    " Filterstring für Dateierweiterung
-                                                           multiselection = abap_false    " Mehrfachselektion möglich
-                                                CHANGING   file_table     = lt_file_table    " Tabelle, die selektierte Dateien enthält
-                                                           rc             = rc    " Rückgabewert: Anzahl Dateien oder -1 falls Fehler auftritt
-                                                           user_action    = user_action    " Benutzeraktion( s. Kl.konstanten ACTION_OK, ACTION_CANCEL)
+    cl_gui_frontend_services=>file_open_dialog( EXPORTING  file_filter    = `Zip Files (*.zip)|*.zip|`
+                                                           multiselection = abap_false
+                                                CHANGING   file_table     = lt_file_table
+                                                           rc             = rc
+                                                           user_action    = user_action
                                                 EXCEPTIONS OTHERS         = 5 ).
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE lcx_exception
