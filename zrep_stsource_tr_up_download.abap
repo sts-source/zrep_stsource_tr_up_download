@@ -331,8 +331,7 @@ CLASS lcl_dev_tr DEFINITION.
     CLASS-METHODS s_tr_as_zip_popup_download
       IMPORTING VALUE(trkorr) TYPE trkorr OPTIONAL.
 
-    CLASS-METHODS s_tr_as_zip_popup_upload
-      RAISING lcx_exception.
+    CLASS-METHODS s_tr_as_zip_popup_upload.
 
     CLASS-METHODS s_tr_choice_dialog
       RETURNING VALUE(result) TYPE trkorr.
